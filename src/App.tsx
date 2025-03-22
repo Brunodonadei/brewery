@@ -2,7 +2,7 @@ import React from "react";
 import { Box } from "@mui/material";
 import { Breweries } from "./components/breweries";
 import { Route, Routes } from "react-router";
-import { DetailBrewerie } from "./components/detailBrewerie";
+import { DetailBrewerie } from "./components/breweryDetail";
 import { Header } from "./components/header";
 
 function App() {
