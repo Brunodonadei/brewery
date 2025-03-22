@@ -1,5 +1,3 @@
-import { useFetchData } from "./useFetchData";
-
 type BreweryType =
   | "micro"
   | "nano"
@@ -12,7 +10,7 @@ type BreweryType =
   | "proprietor"
   | "closed";
 
-interface IBrewerie {
+export interface IBrewerie {
   id: string;
   name: string;
   brewery_type: BreweryType;
@@ -30,7 +28,3 @@ interface IBrewerie {
   state: string;
   street: string;
 }
-
-export const useGetBrewerie = () => {
-  return useFetchData<IBrewerie[]>("breweries");
-};
