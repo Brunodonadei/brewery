@@ -36,7 +36,7 @@ export const DetailBrewerie = () => {
     >
       <Typography sx={{ margin: "10px 0" }}>
         <Link
-          to={"/breweries"}
+          to={"/"}
           style={{
             margin: "10px 0 !important",
             color: "rgba(0, 0, 0, 0.87)",
@@ -66,9 +66,19 @@ export const DetailBrewerie = () => {
           <BreweryDetailInfo label="Código postal" value={postal_code} />
           <BreweryDetailInfo label="País" value={country} />
           <BreweryDetailInfo label="Telefone" value={phone} />
-          {website_url && <BreweryLink label="Website" url={website_url} />}
+          {website_url && (
+            <BreweryLink
+              label="Website"
+              url={website_url}
+              value={website_url}
+            />
+          )}
           {location && (
-            <BreweryLink label="Ver no maps" url={`${urlMaps}${location}`} />
+            <BreweryLink
+              label="Ver no maps"
+              url={`${urlMaps}${location}`}
+              value={location}
+            />
           )}
         </CardContent>
       </Card>

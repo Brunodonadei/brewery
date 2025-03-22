@@ -10,7 +10,7 @@ function App() {
     <Box display="grid" sx={{ placeItems: "center" }}>
       <Header />
       <Routes>
-        <Route path="breweries" element={<Breweries />} />
+        <Route path="/" element={<Breweries />} />
         <Route path="breweries/:id" element={<DetailBrewerie />} />
       </Routes>
     </Box>

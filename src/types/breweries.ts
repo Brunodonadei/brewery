@@ -1,4 +1,4 @@
-type BreweryType =
+export type BreweryType =
   | "micro"
   | "nano"
   | "regional"

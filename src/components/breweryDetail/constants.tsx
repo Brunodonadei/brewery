@@ -16,7 +16,15 @@ export const BreweryDetailInfo = ({
   ) : null;
 };
 
-export const BreweryLink = ({ label, url }: { label: string; url: string }) => {
+export const BreweryLink = ({
+  label,
+  url,
+  value,
+}: {
+  label: string;
+  url: string;
+  value: string;
+}) => {
   return (
     <Typography sx={{ fontWeight: 500 }}>
       {label}:{" "}
@@ -25,7 +33,7 @@ export const BreweryLink = ({ label, url }: { label: string; url: string }) => {
         to={url}
         style={{ fontWeight: "normal", color: "#4d85e1" }}
       >
-        {url}
+        {value}
       </Link>
     </Typography>
   );
