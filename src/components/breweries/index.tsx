@@ -16,10 +16,8 @@ import { Filter } from "../filter";
 import { mappedColors } from "./constants";
 
 export const Breweries = () => {
-  const [selectedType, setSelectedType] = useState<string>("");
-
+  const [selectedType, setSelectedType] = useState<string>("padrão");
   const { data: breweries } = useGetBreweryByType(selectedType);
-
   if (!breweries) return null;
 
   return (
