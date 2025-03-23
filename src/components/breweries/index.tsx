@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useGetBreweries } from "../../hooks/useGetBreweries";
 import {
   Box,
   Card,
@@ -9,22 +8,26 @@ import {
   Typography,
 } from "@mui/material";
 import { Link } from "react-router";
-import { useGetBreweryByType } from "../../hooks/useGetBreweriesByType";
+import {
+  useGetBreweryByType,
+  validTypes,
+} from "../../hooks/useGetBreweriesByType";
 import { Filter } from "../filter";
+import { mappedColors } from "./constants";
 
 export const Breweries = () => {
   const [selectedType, setSelectedType] = useState<string>("");
-  const { data: allBreweries } = useGetBreweries();
-  const { data: filteredBreweries } = useGetBreweryByType(selectedType);
-  const brewery = selectedType !== "" ? filteredBreweries : allBreweries;
-  if (!brewery) return null;
-  const uniqueOptions = [...new Set(allBreweries?.map((b) => b.brewery_type))];
+
+  const { data: breweries } = useGetBreweryByType(selectedType);
+
+  if (!breweries) return null;
+
   return (
     <>
       <Filter
         value={selectedType}
         setValue={setSelectedType}
-        options={uniqueOptions}
+        options={validTypes}
       />
       <Box
         style={{
@@ -34,7 +37,7 @@ export const Breweries = () => {
           padding: "20px 0",
         }}
       >
-        {brewery?.map((b) => {
+        {breweries?.map((b) => {
           return (
             <Link
               key={b.id}
@@ -61,7 +64,14 @@ export const Breweries = () => {
                   </Box>
                   <Box>
                     <Divider />
-                    <Chip label={b.brewery_type} sx={{ marginTop: 1 }} />
+                    <Chip
+                      label={b.brewery_type}
+                      sx={{
+                        marginTop: 1,
+                        backgroundColor: mappedColors(b.brewery_type),
+                        color: "white",
+                      }}
+                    />
                   </Box>
                 </CardContent>
               </Card>

@@ -1,6 +1,5 @@
 import React from "react";
 import { MenuItem, Select, Box, Typography } from "@mui/material";
-import { BreweryType } from "../../types/breweries";
 
 export const Filter = ({
   value,
@@ -9,7 +8,7 @@ export const Filter = ({
 }: {
   value: string;
   setValue: (value: string) => void;
-  options: BreweryType[];
+  options: string[];
 }) => {
   return (
     <Box
@@ -21,14 +20,15 @@ export const Filter = ({
         alignItems: "center",
       }}
     >
-      <Typography>Filtro: </Typography>
+      <Typography>Filtro:</Typography>
       <Select
         sx={{ maxWidth: 100, height: "40px", marginLeft: "10px" }}
         value={value}
         onChange={(e) => setValue(e.target.value)}
         fullWidth
+        displayEmpty
       >
-        <MenuItem value="">Padrão</MenuItem>
+        <MenuItem value="padrão">padrão</MenuItem>
         {options.map((type) => (
           <MenuItem key={type} value={type}>
             {type}
