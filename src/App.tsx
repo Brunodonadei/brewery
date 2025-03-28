@@ -7,7 +7,9 @@ import { Header } from "./components/header";
 
 function App() {
   return (
-    <Box display="grid" sx={{ placeItems: "center" }}>
+    <Box
+      sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+    >
       <Header />
       <Routes>
         <Route path="/" element={<Breweries />} />

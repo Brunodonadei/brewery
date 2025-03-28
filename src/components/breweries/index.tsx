@@ -1,82 +1,64 @@
 import React, { useState } from "react";
-import {
-  Box,
-  Card,
-  CardContent,
-  Chip,
-  Divider,
-  Typography,
-} from "@mui/material";
-import { Link } from "react-router";
-import {
-  useGetBreweryByType,
-  validTypes,
-} from "../../hooks/useGetBreweriesByType";
+import { Box, Pagination, Skeleton } from "@mui/material";
+import { validTypes } from "../../hooks/useGetBreweriesByType";
 import { Filter } from "../filter";
-import { mappedColors } from "./constants";
+import { useGetBreweries } from "../../hooks/useGetBreweries";
+import { useGetMetaData } from "../../hooks/useGetMetaData";
+import { BreweryCard } from "../breweryCard";
 
 export const Breweries = () => {
   const [selectedType, setSelectedType] = useState<string>("padrão");
-  const { data: breweries } = useGetBreweryByType(selectedType);
-  if (!breweries) return null;
+  const [page, setPage] = useState<number>(1);
+  const { data: breweries, loading: isLoadingBreweries } = useGetBreweries(
+    page,
+    selectedType
+  );
+  const { data: metaData, loading: isLoadingMeta } =
+    useGetMetaData(selectedType);
+  const itemsPerPage = 16;
+  const totalPages = metaData ? Math.ceil(metaData.total / itemsPerPage) : 0;
+  const handleTypeChange = (newType: string) => {
+    setSelectedType(newType);
+    setPage(1);
+  };
+
+  console.log(isLoadingBreweries, isLoadingMeta);
 
   return (
     <>
       <Filter
         value={selectedType}
-        setValue={setSelectedType}
+        setValue={handleTypeChange}
         options={validTypes}
       />
       <Box
-        style={{
+        sx={{
           display: "grid",
           gridTemplateColumns: "repeat(4, 1fr)",
           gap: "15px",
           padding: "20px 0",
         }}
       >
-        {breweries?.map((b) => {
-          return (
-            <Link
-              key={b.id}
-              to={`/breweries/${b.id}`}
-              style={{ textDecoration: "none" }}
-            >
-              <Card variant="outlined" sx={{ maxWidth: 250, height: "100%" }}>
-                <CardContent
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    height: "100%",
-                    boxSizing: "border-box",
-                    padding: "16px !important",
-                  }}
-                >
-                  <Box sx={{ flexGrow: 1 }}>
-                    <Typography variant="h6">{b.name}</Typography>
-                    <Typography>{b.address_1}</Typography>
-                    <Typography>
-                      {b.city} {b.state} - {b.phone}
-                    </Typography>
-                    <Typography>{b.country}</Typography>
-                  </Box>
-                  <Box>
-                    <Divider />
-                    <Chip
-                      label={b.brewery_type}
-                      sx={{
-                        marginTop: 1,
-                        backgroundColor: mappedColors(b.brewery_type),
-                        color: "white",
-                      }}
-                    />
-                  </Box>
-                </CardContent>
-              </Card>
-            </Link>
-          );
-        })}
+        {isLoadingBreweries || isLoadingMeta
+          ? Array.from({ length: itemsPerPage }).map((_, i) => (
+              <Skeleton
+                key={i}
+                variant="rectangular"
+                width={235}
+                height={235}
+                animation="wave"
+                sx={{ borderRadius: "4px" }}
+              />
+            ))
+          : breweries?.map((b) => <BreweryCard key={b.id} brewery={b} />)}
       </Box>
+      <Pagination
+        count={totalPages}
+        page={page}
+        onChange={(_, value) => setPage(value)}
+        disabled={!breweries?.length}
+        sx={{ marginBottom: "20px" }}
+      />
     </>
   );
 };
