@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { Box, Pagination, Skeleton } from "@mui/material";
-import { validTypes } from "../../hooks/useGetBreweriesByType";
+import { Box, Button, Pagination, Skeleton } from "@mui/material";
 import { Filter } from "../filter";
 import { useGetBreweries } from "../../hooks/useGetBreweries";
 import { useGetMetaData } from "../../hooks/useGetMetaData";
 import { BreweryCard } from "../breweryCard";
+import { validTypes } from "../../utils/breweryTypes";
 
 export const Breweries = () => {
   const [selectedType, setSelectedType] = useState<string>("padrão");
