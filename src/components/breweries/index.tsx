@@ -22,8 +22,6 @@ export const Breweries = () => {
     setPage(1);
   };
 
-  console.log(isLoadingBreweries, isLoadingMeta);
-
   return (
     <>
       <Filter
